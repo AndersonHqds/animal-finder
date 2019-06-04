@@ -16,15 +16,32 @@ module.exports = app => {
             numero: data.numero,
             foto: data.foto
         })
-        user.save().then(() => console.log("User saved"))
-        res.status(200).send("OK")
+        user.save().then(() => {
+            console.log("User saved")
+            res.status(201).send("Usuário criado")
+        })
+        
     }
 
-    const get = (req, res) => {
+    const get = (_, res) => {
         const { User } = app.db.user
-
-        console.log(User.find())
+        
+        User.find({},{ password: 0, __v: 0}, (err, users) => {
+            if(err)
+                return res.status(500).send("Bad Request")
+            if(users.length === 0)
+                return res.status(404).send("Nada encontrado")
+            res.status(200).send(JSON.stringify(users))
+        })
     }
 
-    return { save, get }
+    const getById = (req, res) => {
+        const { User } = app.db.user
+        User.findOne({ "_id": req.params.id }, { password: 0, __v: 0 })
+            .then(stat => {
+                res.status(200).json(stat)
+            })
+    }
+
+    return { save, get, getById }
 }
