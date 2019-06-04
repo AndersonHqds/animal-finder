@@ -1,5 +1,5 @@
 module.exports = app => {
-    const { User } = app.db.user
+    const { Animal } = app.db.animal
 
     const save = (req, res) => {
         

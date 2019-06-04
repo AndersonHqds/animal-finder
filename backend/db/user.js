@@ -3,13 +3,13 @@ module.exports = app => {
         name: String,
         email: String,
         password: String,
-        telefone: String,
-        cidade: String,
-        estado: String,
+        phone: String,
+        city: String,
+        state: String,
         cep: String,
-        rua: String,
-        numero: Number,
-        foto: String
+        street: String,
+        number: Number,
+        picture: String
     })
 
     return { User }
