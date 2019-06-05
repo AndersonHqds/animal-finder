@@ -1,7 +1,7 @@
 module.exports = app => {
     const User = app.mongoose.model('User', {
         name: String,
-        email: String,
+        email: { type: String, unique: true },
         password: String,
         phone: String,
         city: String,
@@ -9,7 +9,8 @@ module.exports = app => {
         cep: String,
         street: String,
         number: Number,
-        picture: String
+        picture: String,
+        admin: Boolean
     })
 
     return { User }
