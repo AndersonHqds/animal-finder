@@ -1,26 +1,30 @@
+const bcrypt = require('bcrypt-nodejs')
+
 module.exports = app => {
     const { User } = app.db.user
+
+    const encryptPassword = password =>{
+        const salt = bcrypt.genSaltSync(10)
+        return bcrypt.hashSync(password, salt)
+    }
 
     const save = (req, res) => {
         
         const data = req.body
 
-        const user = new User({
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            telefone: data.telefone,
-            cidade: data.cidade,
-            estado: data.estado,
-            cep: data.cep,
-            rua: data.rua,
-            numero: data.numero,
-            foto: data.foto
-        })
-        user.save().then(() => {
-            console.log("User saved")
-            res.status(201).send("Usuário criado")
-        })
+        const user = new User({ ...data })
+        user.admin = false
+        user.password = encryptPassword(user.password)
+        user.save()
+            .then(() => {
+                console.log("User saved")
+                return res.status(201).send("Usuário criado")
+            })
+            .catch(error => {
+                if(error.code === 11000)
+                return  res.status(400).send("E-mail já cadastrado")
+                res.status(500).send(error)
+            })
         
     }
 
@@ -30,14 +34,14 @@ module.exports = app => {
                 return res.status(500).send("Bad Request")
             if(users.length === 0)
                 return res.status(404).send("Nada encontrado")
-            res.status(200).send(JSON.stringify(users))
+            return res.status(200).send(users)
         })
     }
 
     const getById = (req, res) => {
         User.findOne({ "_id": req.params.id }, { password: 0, __v: 0 })
             .then(stat => {
-                return res.status(200).json(stat)
+                return res.status(200).send(stat)
             })
     }
 

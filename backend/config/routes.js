@@ -9,4 +9,7 @@ module.exports = app => {
     app.route(`/${ USERS }/:id`)
         .get(app.api.user.getById)
         .delete(app.api.user.remove)
+        
+    app.route('/auth')
+        .post(app.api.auth.signin)
 }
