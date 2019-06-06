@@ -6,8 +6,11 @@ require('./config/mongodb')
 app.mongoose = mongoose
 
 consign()
-    .include('./config/middlewares.js')
+    .include('./config/passport.js')
+    .then('./config/middlewares.js')
     .then('./db')
+    .then('./helpers/validateErrors.js')
+    .then('./helpers')
     .then('./api')
     .then('./config/routes.js')
     .into(app)
