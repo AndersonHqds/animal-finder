@@ -3,7 +3,9 @@ const jwt = require('jwt-simple')
 const bcrypt = require('bcrypt-nodejs')
 
 module.exports = app => {
+    
     const signin = async(req, res) => {
+        
         const { email, password } = req.body
         
         if(!email || !password)
@@ -33,5 +35,21 @@ module.exports = app => {
         })
     }
 
-    return { signin }
+    const checkToken = async(req, res) => {
+        const user = req.body || null
+
+        try{
+            if(user){
+                const token = jwt.decode(user.token, secret)
+
+                if(new Date(token.exp * 1000) > new Date()){
+                    return res.send(true)
+                }
+            }
+        }catch(e){ /* Token isn't valid */}
+
+        res.send(false)
+    }
+
+    return { signin, checkToken }
 }
