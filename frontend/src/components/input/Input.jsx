@@ -4,7 +4,7 @@ export default props => {
     return (
         <>
             <span className="input-holder" aria-labelledby={`${props.name}-tip`}>
-                <label className="label-margin" htmlFor="email">
+                <label className="label-margin" htmlFor={props.name}>
                     {props.name}
                 </label>
                 <input
