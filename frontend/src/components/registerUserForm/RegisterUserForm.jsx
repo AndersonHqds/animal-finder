@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import CreateInput from "../input/Input";
+import { useSelector, useDispatch } from 'react-redux';
+import { addTodo } from '../../actions/todos';
 
 export default props => {
+
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
 
+    const counter = useSelector(state => state.counter);
+    const dispatch = useDispatch();
+
     const checkUser = evt => {
         evt.preventDefault();
-        console.log(user);
-        console.log(password);
     };
 
     return (
         <>
             <form className="form-createuser" onSubmit={evt => checkUser(evt)}>
-
+                <p>Contador: {counter}</p>
+                <input type="button" onClick={() => dispatch(addTodo(''))} />
                 <CreateInput
                     name="Email"
                     type="email"
@@ -24,7 +29,7 @@ export default props => {
                     tip="Digite seu email" />
 
                 <CreateInput
-                    name="Password"
+                    name="Senha"
                     type="password"
                     value={password}
                     setValue={setPassword}
