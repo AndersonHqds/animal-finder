@@ -1,6 +1,6 @@
 module.exports = app => {
     const Animal = app.mongoose.model('Animal', {
-        owner: Object,
+        owner: String,
         breed: String,
         color: String,
         latitude: String,
@@ -10,7 +10,7 @@ module.exports = app => {
         cellphone: String,
         street: String,
         number: Number,
-        picture: String
+        picture: Array
     })
 
     return { Animal }
