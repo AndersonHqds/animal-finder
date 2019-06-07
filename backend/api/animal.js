@@ -4,8 +4,8 @@ module.exports = app => {
     const save = (req, res) => {
         
         const data = req.body
-
-        const user = new User({
+        
+        const user = new Animal({
             name: data.name,
             email: data.email,
             password: data.password,
