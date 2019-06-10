@@ -1,0 +1,10 @@
+.inputAdvice{
+    opacity: 0;
+}
+.defaultInput{
+    &:focus{
+        & ~ .inputAdvice {
+            opacity: 1;
+        }
+    }
+}

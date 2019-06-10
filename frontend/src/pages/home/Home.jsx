@@ -1,11 +1,10 @@
 import * as React from 'react';
-import RegisterUserForm from '../../components/registerUserForm/RegisterUserForm';
+import LoginForm from '../../components/LoginForm/LoginForm';
 
 export default props => {
     return (
         <>
-            <h1>YO!</h1>
-            <RegisterUserForm />
+            <LoginForm />
         </>
     );
 };

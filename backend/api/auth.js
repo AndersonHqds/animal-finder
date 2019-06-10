@@ -3,20 +3,26 @@ const jwt = require('jwt-simple')
 const bcrypt = require('bcrypt-nodejs')
 
 module.exports = app => {
-    
-    const signin = async(req, res) => {
-        
+
+    const signin = async (req, res) => {
+
         const { email, password } = req.body
-        
-        if(!email || !password)
+
+        if (!email || !password)
             return res.status(400).send("Informe a senha / E-mail")
-        
+
         const { User } = app.db.user
         const user = await User.findOne({ email: email }, {})
-        
-        if(!user) return res.status(400).send("Usuário não encontrado")
-        const isValid = bcrypt.compareSync(password, user.password)
-        if(!isValid) return res.status(401).send("Email/senha inválidos")
+
+        if (!user) return res.status(400).send("Usuário não encontrado")
+        try {
+            const isValid = bcrypt.compareSync(password, user.password)
+            if (!isValid) return res.status(401).send("Email/senha inválidos")
+        } catch (error) {
+            console.log(error)
+        };
+
+
 
         const now = Math.floor(Date.now() / 1000)
 
@@ -35,18 +41,18 @@ module.exports = app => {
         })
     }
 
-    const checkToken = async(req, res) => {
+    const checkToken = async (req, res) => {
         const user = req.body || null
 
-        try{
-            if(user){
+        try {
+            if (user) {
                 const token = jwt.decode(user.token, secret)
 
-                if(new Date(token.exp * 1000) > new Date()){
+                if (new Date(token.exp * 1000) > new Date()) {
                     return res.send(true)
                 }
             }
-        }catch(e){ /* Token isn't valid */}
+        } catch (e) { /* Token isn't valid */ }
 
         res.send(false)
     }
