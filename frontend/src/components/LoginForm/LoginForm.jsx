@@ -1,55 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import CreateInput from "../input/Input";
 import { useDispatch, useSelector } from 'react-redux';
-import { signinUser } from '../../actions/user';
-import { getUser } from '../../api/user/user';
+import { requestLogin } from '../../actions/user';
+import { Redirect } from "react-router-dom";
+
 import ShowMessage from '../showMessage/ShowMessage';
 
 
 export default props => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [invalidMsg, setInvalidMsg] = useState(null);
 
-    const user = useSelector(state => state.user);
+    const [form, setValues] = useState({
+        email: '',
+        password: '',
+    });
 
-    const dispatch = useDispatch();
-
-    const checkUser = async evt => {
-        evt.preventDefault();
-        const response = await getUser({
-            email,
-            password
-        })
-        checkResponse(response);
+    const updateField = e => {
+        setValues({
+            ...form,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const checkResponse = response => {
-        if ('errorCode' in response) return setInvalidMsg(response.msg);
-        dispatch(signinUser(response.data));
-    }
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        alert(`Usuário logado na aplicação: ${user.email || "Nenhum"}`);
-    }, [user])
+    const checkUser = evt => {
+        evt.preventDefault();
+        dispatch(requestLogin({
+            email: form.email,
+            password: form.password
+        }));
+        <Redirect to='/home' />
+    };
+
 
     return (
         <>
             <h1> Login Page </h1>
             <form className="form-createuser" onSubmit={evt => checkUser(evt)}>
+
                 <CreateInput
-                    name="Email"
+                    label="E-mail"
+                    name="email"
                     type="email"
-                    value={email}
-                    setValue={setEmail}
+                    value={form.email}
+                    setValue={updateField}
                     isRequired={true}
                     tip="Digite seu email" />
 
                 <CreateInput
-                    name="Senha"
+                    label="Senha"
+                    name="password"
                     type="password"
-                    value={password}
-                    setValue={setPassword}
+                    value={form.password}
+                    setValue={updateField}
                     isRequired={true}
                     tip="Digite sua senha" />
 
@@ -65,15 +69,11 @@ export default props => {
                 value="Facebook" />
 
             <input
-                type="submit"
+                type="button"
                 value="Google" />
 
-            <input
-                type="submit"
-                value="Registrar" />
-
-            {invalidMsg !== null && (
-                <ShowMessage message={invalidMsg} />
+            {user.responseStatus.code !== 200 && (
+                <ShowMessage message={user.responseStatus.msg} />
             )}
         </>
     );

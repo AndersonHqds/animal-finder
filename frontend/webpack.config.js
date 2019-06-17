@@ -10,6 +10,9 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 module.exports = {
   entry: ["babel-polyfill", "./src/index.js"],
   mode: isDevelopment ? "development" : "production",
+  output: {
+    publicPath: '/'
+  },
   module: {
     rules: [
       {
@@ -57,6 +60,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true
   },
   resolve: {
     extensions: ["*", ".js", ".jsx"]
