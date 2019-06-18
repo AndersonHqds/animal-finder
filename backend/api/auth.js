@@ -19,6 +19,7 @@ module.exports = app => {
             const isValid = bcrypt.compareSync(password, user.password)
             if (!isValid) return res.status(401).send("Email/senha inválidos")
         } catch (error) {
+            //return res.status(401).send("Email/senha inválidos")
             console.log(error)
         };
 
