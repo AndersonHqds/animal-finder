@@ -23,10 +23,4 @@ export const signUp = user => axios.post(`${DEFAULT_URL_API}/signup`, {
 }).then(re => re)
     .catch(getError);
 
-export const isValidTokenUser = token => {
-    axios.post(`${DEFAULT_URL_API}/validateToken`, {
-        token
-    })
-        .then(resp => resp)
-        .catch(() => false);
-}
+

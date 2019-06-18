@@ -3,11 +3,11 @@ import CreateInput from "../input/Input";
 import { useDispatch, useSelector } from 'react-redux';
 import { requestLogin } from '../../actions/user';
 import { Redirect } from "react-router-dom";
-
+import { withRouter } from 'react-router'
 import ShowMessage from '../showMessage/ShowMessage';
 
 
-export default props => {
+export default withRouter(props => {
 
     const [form, setValues] = useState({
         email: '',
@@ -24,14 +24,21 @@ export default props => {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-    const checkUser = evt => {
+    const checkUser = async evt => {
         evt.preventDefault();
         dispatch(requestLogin({
             email: form.email,
             password: form.password
-        }));
-        <Redirect to='/home' />
+        }));    
     };
+
+    useEffect(() => {
+       if(user){
+           if(user.responseStatus.code === 200){
+             props.history.push('/home')  
+           }
+       }
+    }, [user])
 
 
     return (
@@ -77,4 +84,4 @@ export default props => {
             )}
         </>
     );
-};
+});
