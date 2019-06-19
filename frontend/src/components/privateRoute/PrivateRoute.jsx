@@ -2,26 +2,18 @@ import * as React from 'react';
 import { Redirect, Route } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { isValidTokenUser } from '../../actions/user';
+import Template from '../template/Template'
+import { USER_INFO } from '../../utils/consts'
 
 function PrivateRoute({ component: Component, ...rest }) {
-
-    const loggedUser = useSelector(state => state.user.information);
-    const isValidToken = useSelector(state => state.user.isValidToken)
-    const dispatch = useDispatch();
-
-    React.useEffect(() => {
-        dispatch(isValidTokenUser(
-            loggedUser.token
-        ));
-    }, [])
+    const user = JSON.parse(localStorage.getItem(USER_INFO)) || null
 
     return (
         <Route
             {...rest}
             render={props =>
-                isValidToken == null ? (<>Loading...</>) : 
-                isValidToken ? (
-                    <Component {...props} />
+                user ? (
+                    <Template children={ <Component { ...props } /> } />
                 ) : (
                         <Redirect
                             to={{
