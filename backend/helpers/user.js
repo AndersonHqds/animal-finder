@@ -39,8 +39,7 @@ module.exports = app => {
 
     const updateUser = async (userDb, userData) => {
         try {
-            console.log(userData)
-            await userDb.update({ _id: userData.id }, { ...userData }, { upsert: true })
+            await userDb.updateOne({ _id: userData.id }, { ...userData }, { upsert: true })
             return { code: 201, msg: "Usuário Atualizado" }
         }
         catch (error) {
