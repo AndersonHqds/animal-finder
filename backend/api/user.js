@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
-
+const { resizeImage } = require('../helpers/images')
+const { USERS } = require('../helpers/consts')
 
 module.exports = app => {
     const { User } = app.db.user
@@ -7,6 +8,8 @@ module.exports = app => {
     /* ROUTES */
 
     const save = async (req, res) => {
+        
+        resizeImage(req.files, USERS)
 
         const user = { ...req.body }
 
@@ -14,33 +17,27 @@ module.exports = app => {
         if (!req.originalUrl.startsWith('/users')) user.admin = false
         if (!req.user || !req.user.admin) user.admin = false
 
-
         const dataValidated = await userHelper.validateData(user, User)
         if (!dataValidated.isValid) return res.status(400).send(dataValidated.msg)
 
         user.password = userHelper.encryptPassword(user.password)
         delete user.confirmPassword
 
-        if (user.id) {
-            try {
+        try{
+            if (user.id) {
                 const { code, msg } = await userHelper.updateUser(User, user)
                 return res.status(code).send(msg)
             }
-            catch (error) { return res.status(error.code).send(error.msg) }
-        }
-        else {
-            try {
+            else {
                 const { code, msg } = await userHelper.insertUser(User, user)
-                return res.status(code).send(msg)
+                return res.status(code).send(msg)     
             }
-            catch (error) { return res.status(error.code).send(error.msg) }
-
         }
+        catch (error) { return res.status(error.code).send(error.msg) }   
     }
 
     const get = (_, res) => {
         User.find({}, { password: 0, __v: 0 }, (err, users) => {
-            console.log(users)
             if (err)
                 return res.status(500).send("Bad Request")
             if (users.length === 0)
