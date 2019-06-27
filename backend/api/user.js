@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
-const { resizeImage } = require('../helpers/images')
+const { resizeImageAndCheckNudity } = require('../helpers/images')
 const { USERS } = require('../helpers/consts')
 
 module.exports = app => {
@@ -9,10 +9,13 @@ module.exports = app => {
 
     const save = async (req, res) => {
         
-        resizeImage(req.files, USERS)
+        const checkImage = await resizeImageAndCheckNudity(req.files, USERS)
+        if(!checkImage.ok){
+            return res.status(400).send(checkImage.message)
+        }
 
         const user = { ...req.body }
-
+        user.picture = req.files[0].filename
         if (req.params.id) user.id = req.params.id
         if (!req.originalUrl.startsWith('/users')) user.admin = false
         if (!req.user || !req.user.admin) user.admin = false
