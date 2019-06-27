@@ -1,6 +1,7 @@
 const admin = require('./admin.js')
 const { upload } = require('./multer')
 const { ANIMALS, USERS } = require('../helpers/consts')
+
 module.exports = app => {
     app.post('/signin', app.api.auth.signin)
     app.post('/validateToken', app.api.auth.checkToken)
