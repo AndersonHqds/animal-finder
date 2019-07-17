@@ -25,7 +25,7 @@ export default props => {
         <>
             <span className={style.inputHolder} aria-labelledby={`${props.label}-tip`}>
 
-                <label className="label-margin" htmlFor={props.label}>
+                <label className={style.labelmargin} htmlFor={props.label}>
                     {props.label}
                 </label>
 

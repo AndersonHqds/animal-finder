@@ -23,16 +23,17 @@ export const signUp = user => axios.post(`${DEFAULT_URL_API}/signup`, {
 }).then(re => re)
     .catch(getError);
 
-export const isValidTokenUser = async(token) =>{
-    try{
-        const response = await axios.post(`${DEFAULT_URL_API}/validateToken`, {token})
-        if(!response.data){
+
+export const isValidTokenUser = async (token) => {
+    try {
+        const response = await axios.post(`${DEFAULT_URL_API}/validateToken`, { token })
+        if (!response.data) {
             localStorage.removeItem(USER_INFO)
             window.location.href = '/'
-        } 
+        }
         return response.data
     }
-    catch(error){
+    catch (error) {
         localStorage.removeItem(USER_INFO)
         return false
     }

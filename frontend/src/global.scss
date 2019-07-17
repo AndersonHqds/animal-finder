@@ -7,6 +7,12 @@
     position: relative;
 }
 
+p{
+    margin: 0;
+}
+html{
+    background-color: #fffdf1;
+}
 .flex{
     display: flex;
 }
@@ -21,4 +27,8 @@
 
 .alc{
     align-items: center;
+}
+ul{
+    padding-left: 0;
+    list-style: none;
 }

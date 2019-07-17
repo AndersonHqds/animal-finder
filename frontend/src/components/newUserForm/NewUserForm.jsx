@@ -101,7 +101,7 @@ export default props => {
         <div>
 
 
-            <h1> Create login page </h1>
+            <h1> Crie sua conta </h1>
 
             <form className="form-createuser" onSubmit={evt => requestLogin(evt)}>
 

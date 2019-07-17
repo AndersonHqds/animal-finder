@@ -1,0 +1,130 @@
+.heading{
+    position: fixed;
+    left: 0;
+    width: 330px;
+    display: block;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #ff935a;
+}
+
+.menu_profile{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile_photo{
+    max-width: 100%;
+    width: 100px;
+    height: auto;
+    border-radius: 100%;
+}
+
+.profile_info{
+    font-size: 14px;
+    word-break: break-all;
+    color: #FFF;
+    line-height: 20px;
+    width: 170px;
+}
+
+.tile{
+        background: #f9654b;
+    padding: 0 10px;
+    box-sizing: border-box;
+    /* width: 100%; */
+    display: block;
+    align-self: flex-end;
+    margin-top: 15px;
+    color: #FFF;
+    text-decoration: none;
+}
+.navegacao{
+    padding: 20px 0;
+    box-sizing: border-box;
+    margin-top: 20px;    
+    li{
+        text-align: left;
+        position: relative;
+        padding: 10px;
+        margin: 20px 0;    
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        transition: background-color .2s ease-in-out;
+        &:first-of-type{
+            margin-top:0;            
+        }
+        a,.submenutext{
+            font-size: 24px;
+            color: #FFF;
+            padding-left: 40px;
+            text-align: left;            
+        }
+        &:hover{
+            background-color: #f9654b;
+            cursor: pointer;  
+        }
+    }
+    .submenu{
+        position: absolute;
+        top:0;
+        height: 0;        
+        transform: translateX(190%);
+        z-index: 2;
+        background: #ff935a;        
+        box-sizing: border-box;
+        overflow: hidden;
+        transition: height .3s ease-in-out;
+        li{
+            &:last-of-type{
+                margin-bottom: 0;
+            }
+        }
+        a{
+            padding-left: 0;
+            span{
+                font-size: 10px;
+                display: block;
+            }
+        }
+    }
+}
+.submenutext{
+    color: #FFF;
+}
+
+.fakeimage{
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    display: inline-block;
+}
+
+.hassubmenu{
+    &:after,&:before{
+        content: "";
+        width: 10px;
+        height: 2px;
+        background-color: #FFF;
+        position: absolute;
+        right: 5px;
+        top: 50% ;
+    }
+    &:after{
+    transform: rotateZ(40deg) translate(-4.3px,-2px);
+    }
+    &:before{
+    transform: rotateZ(-35deg) translate(-3px,0px);
+    }
+    &:hover{  
+        .submenu{
+            height: 240px;
+            transition: height .2s  ease-in-out;
+        } 
+    }
+}
