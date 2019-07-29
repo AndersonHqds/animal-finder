@@ -7,6 +7,7 @@ import { withRouter } from 'react-router'
 import ShowMessage from '../showMessage/ShowMessage';
 import { FACEBOOK_ICON, GOOGLE_ICON } from "../../utils/consts";
 
+
 export default withRouter(props => {
 
     const [form, setValues] = useState({
@@ -69,7 +70,7 @@ export default withRouter(props => {
                     value="Entrar"
                     className={style.button}
                 />
-
+                
                 <btn
                     type="submit"
                     value="entrar"

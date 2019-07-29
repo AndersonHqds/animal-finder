@@ -1,5 +1,6 @@
-import React from 'react';
-import style from "./Input.scss";
+import React, { useState, useEffect } from 'react';
+import { InputHolder, InputField, InputLabel, InputLabelContent,InputAdvice } from './Input';
+
 
 const getPattern = rule => {
     switch (rule) {
@@ -14,37 +15,45 @@ const getPattern = rule => {
 
 
 export default props => {
+    
     const isRequired = props.isRequired || false;
     const pattern = 'pattern' in props ? { pattern: getPattern(props.pattern) } : {};
+    const [isFilled, setisFilled] = useState(false);
     const execBlur = evt => {
         if ('onBlur' in props)
             props.onBlur(evt.target.value);
     }
-
+    
+    const changeValue = evt => {        
+        if(evt.target.value.length > 0 && isFilled == false){
+            setisFilled(true);
+        }else{
+            setisFilled(false);
+        }
+        props.setValue(evt);       
+    }
     return (
         <>
-            <span className={style.inputHolder} aria-labelledby={`${props.label}-tip`}>
+            <InputHolder aria-labelledby={`${props.label}-tip`}    className={isFilled && "inputFilled"} >
 
-                <label className={style.labelmargin} htmlFor={props.label}>
-                    {props.label}
-                </label>
-
-                <input
+                <InputField
                     type={props.type}
                     name={props.name}
                     value={props.value}
                     {...pattern}
                     onBlur={evt => execBlur(evt)}
-                    onChange={evt => props.setValue(evt)}
-                    required={isRequired}
-                    className={style.defaultInput}
+                    onChange={evt => changeValue(evt)}
+                    required={isRequired}  
+                                  
                 />
-
-                <p className={style.inputAdvice} id={`${props.label}-tip`}>
+                <InputLabel htmlFor={props.label}>
+                  <InputLabelContent>{props.label}</InputLabelContent>
+                </InputLabel>
+                <InputAdvice id={`${props.label}-tip`}>
                     {props.tip}
-                </p>
+                </InputAdvice>
 
-            </span>
+            </InputHolder>
         </>
     );
 };
