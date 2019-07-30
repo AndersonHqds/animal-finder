@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Redirect, Route } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { isValidTokenUser } from '../../actions/user';
+
 import Template from '../template/Template'
 import { USER_INFO } from '../../utils/consts'
 
@@ -13,7 +12,7 @@ function PrivateRoute({ component: Component, ...rest }) {
             {...rest}
             render={props =>
                 user ? (
-                    <Template children={ <Component { ...props } /> } />
+                    <Template children={<Component {...props} />} />
                 ) : (
                         <Redirect
                             to={{

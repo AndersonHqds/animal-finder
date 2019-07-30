@@ -1,10 +1,27 @@
 .inputAdvice{
     opacity: 0;
+    margin-bottom: 20px;    
+    font-size: 12px;
+    text-align: left;
 }
 .defaultInput{
+    padding: 10px;
+    border-radius: 0;
+    width: 100%;
+    background: #fc6642;
+    border: none;
+    color: #FFF;
+    margin-top: 5px;    
+    border-bottom: 4px solid #ff935a;
+    box-sizing: border-box;
     &:focus{
         & ~ .inputAdvice {
             opacity: 1;
         }
     }
+}
+
+.labelmargin{
+    display: block;
+    text-align: left;
 }

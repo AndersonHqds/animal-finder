@@ -4,6 +4,7 @@ import CustomSelect from '../customSelect/CustomSelect';
 import { getAllStatesBrazil, getAdressCepApi } from "../../api/ibge/ibge";
 import { signUp } from "../../api/user/user";
 import ShowMessage from '../showMessage/ShowMessage';
+import FileUploader from "../fileUploader/fileUploader.jsx";
 
 export default props => {
 
@@ -101,10 +102,13 @@ export default props => {
         <div>
 
 
-            <h1> Create login page </h1>
+            <h1> Crie sua conta </h1>
 
             <form className="form-createuser" onSubmit={evt => requestLogin(evt)}>
-
+                <FileUploader 
+                name="picture"
+                setValue={updateField}/>
+                
                 <CreateInput
                     label="Nome"
                     name="name"
