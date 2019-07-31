@@ -1,25 +1,5 @@
 import styled from "styled-components";
 
-
-export const InputHolder = styled.span`
-    position: relative;
-	z-index: 1;
-	display: inline-block;
-	margin: 1em;
-	max-width: 350px;
-	width: 100%;
-    vertical-align: top;    
-     .inputFilled ${InputLabel} ${InputLabelContent}{
-        color: #ff935a;
-	    -webkit-transform: translate3d(0, -1em, 0) scale3d(0.655, 0.655, 1);
-	    transform: translate3d(0, -1em, 0) scale3d(0.655, 0.655, 1);
-    }
-     .inputFilled ${InputLabel}:after{
-        background: #ff935a;
-	    -webkit-transform: scale3d(1, 0.25, 1);
-	    transform: scale3d(1, 0.25, 1);
-    }
-`;
 export const InputLabelContent = styled.span`
 	position: relative;
 	display: block;
@@ -71,6 +51,26 @@ export const InputLabel = styled.label`
         transition: transform 0.3s, background-color 0.3s;  
     }
 `;
+export const InputHolder = styled.span`
+    position: relative;
+	z-index: 1;
+	display: inline-block;
+	margin: 1em;
+	max-width: 350px;
+	width: 100%;
+    vertical-align: top;    
+    &.inputFilled ${InputLabel} ${InputLabelContent}{
+        color: #ff935a;
+	    -webkit-transform: translate3d(0, -1em, 0) scale3d(0.655, 0.655, 1);
+	    transform: translate3d(0, -1em, 0) scale3d(0.655, 0.655, 1);
+    }
+    &.inputFilled ${InputLabel}:after{
+        background: #ff935a;
+	    -webkit-transform: scale3d(1, 0.25, 1);
+	    transform: scale3d(1, 0.25, 1);
+    }
+`;
+
 export const InputAdvice = styled.p`
     display:block;
     margin:0;

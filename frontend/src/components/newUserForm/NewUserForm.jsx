@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import CreateInput from "../input/Input";
+import CreateInput from "../input/Input.jsx";
 import CustomSelect from '../customSelect/CustomSelect';
 import { getAllStatesBrazil, getAdressCepApi } from "../../api/ibge/ibge";
 import { signUp } from "../../api/user/user";
 import ShowMessage from '../showMessage/ShowMessage';
 import FileUploader from "../fileUploader/fileUploader.jsx";
+import { FlexContainer , SecondContainer, FormCreateuser, InnerContainer} from './NewUserForm.js';
 
 export default props => {
 
@@ -31,10 +32,10 @@ export default props => {
         //  setFormValues({ ...initialStateForm });
     };
 
-    const updateField = e => {
+    const updateField = (name,value) => {
         setFormValues({
             ...form,
-            [e.target.name]: e.target.value
+            [name] : value
         });
     };
 
@@ -104,11 +105,12 @@ export default props => {
 
             <h1> Crie sua conta </h1>
 
-            <form className="form-createuser" onSubmit={evt => requestLogin(evt)}>
+            <FormCreateuser onSubmit={evt => requestLogin(evt)}>
+            <FlexContainer>
                 <FileUploader 
                 name="picture"
                 setValue={updateField}/>
-                
+                <InnerContainer>
                 <CreateInput
                     label="Nome"
                     name="name"
@@ -127,7 +129,9 @@ export default props => {
                     setValue={updateField}
                     isRequired={true}
                     tip="Digite seu email" />
-
+                    </InnerContainer>
+            </FlexContainer>
+            <SecondContainer>
                 <CreateInput
                     label="Senha"
                     name="password"
@@ -209,7 +213,8 @@ export default props => {
                     type="submit"
                     value="Cadastrar"
                 />
-            </form>
+                </SecondContainer>
+            </FormCreateuser>
             {hasMessage !== '' && (
                 <ShowMessage message={hasMessage} />
             )}

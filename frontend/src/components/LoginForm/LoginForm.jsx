@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CreateInput from "../input/Input";
+import CreateInput from "../input/Input.jsx";
 import { useDispatch, useSelector } from 'react-redux';
 import { requestLogin } from '../../actions/user';
 import style from "./LoginForm.scss";
