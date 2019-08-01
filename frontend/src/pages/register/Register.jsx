@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RegisterForm from '../../components/newUserForm/NewUserForm';
+import RegisterForm from '../../components/newUserForm/NewUserForm.jsx';
 
 export default props => {
     return (

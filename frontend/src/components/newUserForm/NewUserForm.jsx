@@ -5,7 +5,7 @@ import { getAllStatesBrazil, getAdressCepApi } from "../../api/ibge/ibge";
 import { signUp } from "../../api/user/user";
 import ShowMessage from '../showMessage/ShowMessage';
 import FileUploader from "../fileUploader/fileUploader.jsx";
-import { FlexContainer , SecondContainer, FormCreateuser, InnerContainer} from './NewUserForm.js';
+import { FlexContainer, SecondContainer, FormCreateuser, InnerContainer } from './NewUserForm.js';
 
 export default props => {
 
@@ -32,10 +32,10 @@ export default props => {
         //  setFormValues({ ...initialStateForm });
     };
 
-    const updateField = (name,value) => {
+    const updateField = (name, value) => {
         setFormValues({
             ...form,
-            [name] : value
+            [name]: value
         });
     };
 
@@ -87,6 +87,7 @@ export default props => {
                 enableWarning('Cep não encontrado');
                 return;
             }
+            enableWarning('');
             setValuesCep(data);
         })
     };
@@ -106,113 +107,113 @@ export default props => {
             <h1> Crie sua conta </h1>
 
             <FormCreateuser onSubmit={evt => requestLogin(evt)}>
-            <FlexContainer>
-                <FileUploader 
-                name="picture"
-                setValue={updateField}/>
-                <InnerContainer>
-                <CreateInput
-                    label="Nome"
-                    name="name"
-                    type="text"
-                    value={form.name}
-                    setValue={updateField}
-                    isRequired={true}
-                    pattern="notSpecialCharacter"
-                    tip="Digite seu nome completo, sem caracteres especiais" />
+                <FlexContainer>
+                    <FileUploader
+                        name="picture"
+                        setValue={updateField} />
+                    <InnerContainer>
+                        <CreateInput
+                            label="Nome"
+                            name="name"
+                            type="text"
+                            value={form.name}
+                            setValue={updateField}
+                            isRequired={true}
+                            pattern="notSpecialCharacter"
+                            tip="Digite seu nome completo, sem caracteres especiais" />
 
-                <CreateInput
-                    label="E-mail"
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    setValue={updateField}
-                    isRequired={true}
-                    tip="Digite seu email" />
+                        <CreateInput
+                            label="E-mail"
+                            name="email"
+                            type="email"
+                            value={form.email}
+                            setValue={updateField}
+                            isRequired={true}
+                            tip="Digite seu email" />
                     </InnerContainer>
-            </FlexContainer>
-            <SecondContainer>
-                <CreateInput
-                    label="Senha"
-                    name="password"
-                    type="password"
-                    value={form.password}
-                    setValue={updateField}
-                    isRequired={true}
-                    tip="Digite sua senha" />
+                </FlexContainer>
+                <SecondContainer>
+                    <CreateInput
+                        label="Senha"
+                        name="password"
+                        type="password"
+                        value={form.password}
+                        setValue={updateField}
+                        isRequired={true}
+                        tip="Digite sua senha" />
 
-                <CreateInput
-                    label="Confirmar Senha"
-                    name="confirmPassword"
-                    type="password"
-                    value={form.confirmPassword}
-                    setValue={updateField}
-                    isRequired={true}
-                    tip="Confirme sua senha" />
+                    <CreateInput
+                        label="Confirmar Senha"
+                        name="confirmPassword"
+                        type="password"
+                        value={form.confirmPassword}
+                        setValue={updateField}
+                        isRequired={true}
+                        tip="Confirme sua senha" />
 
 
-                <CreateInput
-                    label="Telefone"
-                    name="phone"
-                    type="tel"
-                    value={form.phone}
-                    setValue={updateField}
-                    isRequired={true}
-                    pattern="numberOnly"
-                    tip="Digite seu telefone, somente números" />
+                    <CreateInput
+                        label="Telefone"
+                        name="phone"
+                        type="tel"
+                        value={form.phone}
+                        setValue={updateField}
+                        isRequired={true}
+                        pattern="numberOnly"
+                        tip="Digite seu telefone, somente números" />
 
-                <CustomSelect options={allStates} selected={form.state} setSelectedState={setSelectedState} />
+                    <CustomSelect options={allStates} selected={form.state} setSelectedState={setSelectedState} />
 
-                <CreateInput
-                    label="Cidade"
-                    name="city"
-                    type="text"
-                    value={form.city}
-                    setValue={updateField}
-                    isRequired={true}
-                    tip="Digite o nome de sua cidade" />
+                    <CreateInput
+                        label="Cidade"
+                        name="city"
+                        type="text"
+                        value={form.city}
+                        setValue={updateField}
+                        isRequired={true}
+                        tip="Digite o nome de sua cidade" />
 
-                <CreateInput
-                    label="Bairro"
-                    name="neighborhood"
-                    type="text"
-                    value={form.neighborhood}
-                    setValue={updateField}
-                    isRequired={true}
-                    tip="Digite o nome do seu bairro" />
+                    <CreateInput
+                        label="Bairro"
+                        name="neighborhood"
+                        type="text"
+                        value={form.neighborhood}
+                        setValue={updateField}
+                        isRequired={true}
+                        tip="Digite o nome do seu bairro" />
 
-                <CreateInput
-                    label="Rua"
-                    name="street"
-                    type="text"
-                    value={form.street}
-                    setValue={updateField}
-                    isRequired={true}
-                    tip="Digite o nome da sua rua" />
+                    <CreateInput
+                        label="Rua"
+                        name="street"
+                        type="text"
+                        value={form.street}
+                        setValue={updateField}
+                        isRequired={true}
+                        tip="Digite o nome da sua rua" />
 
-                <CreateInput
-                    label="Número"
-                    name="number"
-                    type="text"
-                    value={form.number}
-                    setValue={updateField}
-                    isRequired={true}
-                    tip="Digite o numero de sua casa" />
+                    <CreateInput
+                        label="Número"
+                        name="number"
+                        type="text"
+                        value={form.number}
+                        setValue={updateField}
+                        isRequired={true}
+                        tip="Digite o numero de sua casa" />
 
-                <CreateInput
-                    label="CEP"
-                    name="cep"
-                    type="text"
-                    pattern="numberOnly"
-                    value={form.cep}
-                    onBlur={getAddressCep}
-                    setValue={updateField}
-                    tip="Digite seu CEP, somente números." />
+                    <CreateInput
+                        label="CEP"
+                        name="cep"
+                        type="text"
+                        pattern="numberOnly"
+                        value={form.cep}
+                        onBlur={getAddressCep}
+                        setValue={updateField}
+                        tip="Digite seu CEP, somente números." />
 
-                <input
-                    type="submit"
-                    value="Cadastrar"
-                />
+                    <input
+                        type="submit"
+                        value="Cadastrar"
+                    />
                 </SecondContainer>
             </FormCreateuser>
             {hasMessage !== '' && (
