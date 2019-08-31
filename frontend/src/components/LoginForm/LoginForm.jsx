@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import CreateInput from "../input/Input";
+import CreateInput from "../input/Input.jsx";
 import { useDispatch, useSelector } from 'react-redux';
 import { requestLogin } from '../../actions/user';
 import style from "./LoginForm.scss";
 import { withRouter } from 'react-router'
 import ShowMessage from '../showMessage/ShowMessage';
 import { FACEBOOK_ICON, GOOGLE_ICON } from "../../utils/consts";
+import DefaultBtn from "../button/Button.jsx";
 
 
 export default withRouter(props => {
@@ -15,10 +16,10 @@ export default withRouter(props => {
         password: '',
     });
 
-    const updateField = e => {
+    const updateField = (name, value) => {
         setValues({
             ...form,
-            [e.target.name]: e.target.value
+            [name]: value
         });
     };
 
@@ -65,22 +66,13 @@ export default withRouter(props => {
                     isRequired={true}
                     tip="Digite sua senha" />
 
-                <input
+                <DefaultBtn
                     type="submit"
-                    value="Entrar"
-                    className={style.button}
-                />
-                
-                <btn
-                    type="submit"
-                    value="entrar"
-                    btnstyle="default"
-                    btnclass="submitlogin" />
+                    value="entrar" />
 
             </form>
 
-            <btnSocial btntype="facebook" btnclass={style.facebookbutton} />
-            <btnSocial btntype="google" btnclass={style.googlebutton} />
+
 
             {user.responseStatus.code !== 200 && (
                 <ShowMessage message={user.responseStatus.msg} />

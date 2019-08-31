@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { InputHolder, InputField, InputLabel, InputLabelContent,InputAdvice } from './Input';
+import { InputHolder, InputField, InputLabel, InputLabelContent, InputAdvice } from './Input.js';
 
 
 const getPattern = rule => {
@@ -15,7 +15,6 @@ const getPattern = rule => {
 
 
 export default props => {
-    
     const isRequired = props.isRequired || false;
     const pattern = 'pattern' in props ? { pattern: getPattern(props.pattern) } : {};
     const [isFilled, setisFilled] = useState(false);
@@ -23,18 +22,28 @@ export default props => {
         if ('onBlur' in props)
             props.onBlur(evt.target.value);
     }
-    
-    const changeValue = evt => {        
-        if(evt.target.value.length > 0 && isFilled == false){
-            setisFilled(true);
-        }else{
-            setisFilled(false);
+
+    const mockObject = evt => ({
+        target: {
+            name: evt.name,
+            value: evt.value
         }
-        props.setValue(evt);       
+    })
+
+    const changeValue = evt => {
+        const val = evt.hasOwnProperty('target') ? evt : mockObject(evt);
+        const isValid = val.target.value.trim() !== '';
+        setisFilled(isValid);
+        props.setValue(val.target.name, val.target.value);
     }
+
+    useEffect(() => {
+        changeValue(props);
+    }, [props.value])
+
     return (
         <>
-            <InputHolder aria-labelledby={`${props.label}-tip`}    className={isFilled && "inputFilled"} >
+            <InputHolder aria-labelledby={`${props.label}-tip`} className={isFilled && "inputFilled"}>
 
                 <InputField
                     type={props.type}
@@ -43,11 +52,10 @@ export default props => {
                     {...pattern}
                     onBlur={evt => execBlur(evt)}
                     onChange={evt => changeValue(evt)}
-                    required={isRequired}  
-                                  
+                    required={isRequired}
                 />
                 <InputLabel htmlFor={props.label}>
-                  <InputLabelContent>{props.label}</InputLabelContent>
+                    <InputLabelContent>{props.label}</InputLabelContent>
                 </InputLabel>
                 <InputAdvice id={`${props.label}-tip`}>
                     {props.tip}
